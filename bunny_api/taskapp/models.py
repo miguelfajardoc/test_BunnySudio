@@ -13,7 +13,7 @@ class Task(models.Model):
         ('DN', 'done'),
     ]
     state = models.CharField(max_length=2, choices = STATE_CHOICES, default = 'TD')
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, related_name='tasks', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.description
