@@ -73,13 +73,24 @@ class App extends Component {
 	})
     }
 
+    deleteTask = (id) => {
+	const newTasks = this.state.tasks.filter(task => task.id !== id);
+	this.setState({
+	    tasks: newTasks
+	})
+    }
+
+    checkDone = () => {
+	
+    }
+
     render () {
 	return (
 	    <div className="App">
 	        <h1>Bunny Test!</h1>
 		<Users users={this.state.users}/>
 		<TaskForm addTask={this.addTask}/>
-	        <Tasks tasks={this.state.tasks}/>
+	        <Tasks deleteTask={this.deleteTask} tasks={this.state.tasks}/>
 	    </div>
 	)
     }
