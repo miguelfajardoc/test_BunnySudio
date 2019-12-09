@@ -53,14 +53,14 @@ const tasks = [
     },
 ];
 
-
+//Principal component of the app
 class App extends Component {
 
     state = {
 	users: users,
 	tasks: tasks
     }
-
+    //function to create a new task in state
     addTask = (description) => {
 
 	const newTask = { 
@@ -72,16 +72,27 @@ class App extends Component {
 	    tasks: [...this.state.tasks, newTask]
 	})
     }
-
+    //function to delete a task
     deleteTask = (id) => {
 	const newTasks = this.state.tasks.filter(task => task.id !== id);
 	this.setState({
 	    tasks: newTasks
 	})
     }
-
-    checkDone = () => {
-	
+    //function to change the state of the task (to do - done)
+    checkDone = (id) => {
+	const newTasks = this.state.tasks.map( task => {
+	    if ( task.id === id ) {
+		if (task.state === "to do") {
+		    task.state = "done";
+		}
+		else {
+		    task.state = "to do";
+		}
+	    }
+	    return task
+	})
+	this.setState({ tasks: newTasks });
     }
 
     render () {
@@ -90,7 +101,12 @@ class App extends Component {
 	        <h1>Bunny Test!</h1>
 		<Users users={this.state.users}/>
 		<TaskForm addTask={this.addTask}/>
-	        <Tasks deleteTask={this.deleteTask} tasks={this.state.tasks}/>
+	        <Tasks
+	            deleteTask={this.deleteTask}
+	            tasks={this.state.tasks}
+	            checkDone={this.checkDone}
+		/>
+		
 	    </div>
 	)
     }
