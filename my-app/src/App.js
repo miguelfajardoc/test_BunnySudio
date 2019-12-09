@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
+
+//components
 import Tasks from './components/Tasks';
+import TaskForm from './components/TaskForm';
 import Users from './components/Users';
+
 
 const users = [
     {
@@ -49,7 +53,6 @@ const tasks = [
     },
 ];
 
-console.log(tasks);
 
 class App extends Component {
 
@@ -57,11 +60,25 @@ class App extends Component {
 	users: users,
 	tasks: tasks
     }
+
+    addTask = (description) => {
+
+	const newTask = { 
+	    description: description,
+	    state: 'to do',
+	    id: this.state.tasks.length,
+	}
+	this.setState({
+	    tasks: [...this.state.tasks, newTask]
+	})
+    }
+
     render () {
 	return (
 	    <div className="App">
 	        <h1>Bunny Test!</h1>
 		<Users users={this.state.users}/>
+		<TaskForm addTask={this.addTask}/>
 	        <Tasks tasks={this.state.tasks}/>
 	    </div>
 	)
